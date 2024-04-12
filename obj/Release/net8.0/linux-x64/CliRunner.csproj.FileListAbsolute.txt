@@ -1,0 +1,11 @@
+/media/ruan/Outros/C#_C++ Projects/CliRunner/bin/Release/net8.0/linux-x64/CliRunner.deps.json
+/media/ruan/Outros/C#_C++ Projects/CliRunner/bin/Release/net8.0/linux-x64/CliRunner.dll
+/media/ruan/Outros/C#_C++ Projects/CliRunner/bin/Release/net8.0/linux-x64/CliRunner.pdb
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/CliRunner.GeneratedMSBuildEditorConfig.editorconfig
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/CliRunner.AssemblyInfoInputs.cache
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/CliRunner.AssemblyInfo.cs
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/CliRunner.csproj.CoreCompileInputs.cache
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/CliRunner.dll
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/refint/CliRunner.dll
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/CliRunner.pdb
+/media/ruan/Outros/C#_C++ Projects/CliRunner/obj/Release/net8.0/linux-x64/ref/CliRunner.dll

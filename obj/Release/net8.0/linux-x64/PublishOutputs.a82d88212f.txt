@@ -1,0 +1,2 @@
+/media/ruan/Outros/C#_C++ Projects/CliRunner_Tests/CliRunner_Tests/bin/Debug/net8.0/CliRunner.so
+/media/ruan/Outros/C#_C++ Projects/CliRunner_Tests/CliRunner_Tests/bin/Debug/net8.0/CliRunner.pdb
