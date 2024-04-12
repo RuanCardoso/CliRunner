@@ -2,6 +2,7 @@ Exemplo de uso:
 
 
 ```
+// Linux '.dll' to windows.
 [DllImport("CliRunner.so", EntryPoint = "Run")]
 public unsafe static extern int Run(char* command_ptr, char* output_ptr, int output_buffer_size, bool wait_for_exit, bool redirect_stdin, boolredirect_stdout, bool redirect_stderr, bool use_shell, bool create_no_window);
 public unsafe static void Main()
@@ -21,4 +22,12 @@ public unsafe static void Main()
         }
     }
 }
+```
+
+Como buildar?
+
+```
+// .NET 8(Native AOT)
+dotnet publish -c Release -r linux-x64 -o "YOUR_PATH"
+dotnet publish -c Release -r win-x64 -o "YOUR_PATH"
 ```
