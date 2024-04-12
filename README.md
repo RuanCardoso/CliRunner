@@ -4,7 +4,7 @@ Exemplo de uso:
 ```
 // Linux '.dll' to windows.
 [DllImport("CliRunner.so", EntryPoint = "Run")]
-public unsafe static extern int Run(char* command_ptr, char* output_ptr, int output_buffer_size, bool wait_for_exit, bool redirect_stdin, bool redirect_stdout, bool redirect_stderr, bool use_shell, bool create_no_window, bool use_powershell = false, bool force_utf8 = false);
+public unsafe static extern int Run(char* command_ptr, char* output_ptr, int output_buffer_size, bool wait_for_exit, bool redirect_stdin, bool redirect_stdout, bool redirect_stderr, bool use_shell, bool create_no_window, bool use_powershell, bool force_utf8);
 public unsafe static void Main()
 {
     fixed (char* command = CliRunner.IsUnix() ? "ifconfig" : "ipconfig")
