@@ -9,19 +9,30 @@ namespace Cli;
 public class CliRunner
 {
     [UnmanagedCallersOnly(EntryPoint = "Run")]
-    public unsafe static int Run(char* command_ptr, char* output_ptr, int output_buffer_size, bool wait_for_exit, bool redirect_stdin, bool redirect_stdout, bool redirect_stderr, bool use_shell, bool create_no_window)
+    public unsafe static int Run(char* command_ptr, char* output_ptr, int output_buffer_size, bool wait_for_exit, bool redirect_stdin, bool redirect_stdout, bool redirect_stderr, bool use_shell, bool create_no_window, bool use_powershell = false, bool force_utf8 = false)
     {
         using (Process process = new())
         {
             string           command         = new(command_ptr);
             ProcessStartInfo pInfo           = process.StartInfo;
-                             pInfo.FileName  = IsUnix() ? "/bin/bash" : "cmd";
-                             pInfo.Arguments = IsUnix() ? $"-c \"{command}\"" : $"/c \"{command}\"";
+                             pInfo.FileName  = IsUnix() ? "/bin/bash" : use_powershell ? "powershell" : "cmd";
+                             pInfo.Arguments = IsUnix() ? $"-c \"{command}\"" : use_powershell ? $"-Command \"{command}\"" : $"/c \"{command}\"";
 
               // STDOUT && STDERR
             pInfo.RedirectStandardInput  = redirect_stdin;
             pInfo.RedirectStandardOutput = redirect_stdout;
             pInfo.RedirectStandardError  = redirect_stderr;
+
+              // Force UTF8 Encoding
+            if (force_utf8)
+            {
+                if (pInfo.RedirectStandardOutput)
+                    pInfo.StandardOutputEncoding = Encoding.UTF8;
+                if (pInfo.RedirectStandardError)
+                    pInfo.StandardErrorEncoding = Encoding.UTF8;
+                if (pInfo.RedirectStandardInput)
+                    pInfo.StandardInputEncoding = Encoding.UTF8;
+            }
 
               // Command running in background.
             pInfo.UseShellExecute = use_shell;
