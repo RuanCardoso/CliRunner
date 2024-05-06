@@ -1,15 +1,23 @@
+  // Developed by: Ruan Cardoso
+  // MIT License
+
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 #pragma warning disable IDE0063
 
 namespace Cli;
 
+[JsonSerializable(typeof(Dictionary<string, string>))]
+internal partial class DictContext: JsonSerializerContext { }
+
 public class CliRunner
 {
     [UnmanagedCallersOnly(EntryPoint = "Run")]
-    public unsafe static int Run(char* command_ptr, char* output_ptr, int output_buffer_size, bool wait_for_exit, bool redirect_stdin, bool redirect_stdout, bool redirect_stderr, bool use_shell, bool create_no_window, bool use_powershell = false, bool force_utf8 = false)
+    public unsafe static int Run(char* command_ptr, char* output_ptr, char* environment_vars, int output_buffer_size, bool wait_for_exit, bool redirect_stdin, bool redirect_stdout, bool redirect_stderr, bool use_shell, bool create_no_window, bool use_powershell = false, bool force_utf8 = false)
     {
         using (Process process = new())
         {
@@ -29,14 +37,30 @@ public class CliRunner
                 if (pInfo.RedirectStandardOutput)
                     pInfo.StandardOutputEncoding = Encoding.UTF8;
                 if (pInfo.RedirectStandardError)
-                    pInfo.StandardErrorEncoding = Encoding.UTF8;
+                    pInfo.StandardErrorEncoding  = Encoding.UTF8;
                 if (pInfo.RedirectStandardInput)
-                    pInfo.StandardInputEncoding = Encoding.UTF8;
+                    pInfo.StandardInputEncoding  = Encoding.UTF8;
             }
 
               // Command running in background.
             pInfo.UseShellExecute = use_shell;
             pInfo.CreateNoWindow  = create_no_window;
+
+              // Set environment variables
+            if (environment_vars != null)
+            {
+                string            json_env      = new(environment_vars);
+                Dictionary<string, string>? env = JsonSerializer.Deserialize(json_env, DictContext.Default.DictionaryStringString);
+                if (env != null)
+                {
+                    foreach (var (key, value) in env)
+                    {
+                        pInfo.EnvironmentVariables.Add(key, value);
+                    }
+                }
+            }
+
+              //pInfo.EnvironmentVariables.Add();
 
               // Start the command and wait for it to finish!
             process.Start();
