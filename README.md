@@ -16,7 +16,7 @@ public unsafe static void Main()
             fixed (char* env_ptr = "{\"KEY1\":\"VALUE1\"}")
             {
                 // arguments: command, output, environment_vars, buffer_size, wait_for_exit, redirect_stdin, redirect_stdout, redirect_stderr, use_shell,     create_no_window use_powershell, force_utf8
-                int stdout_size = CliRunner.Run(command, stdout_ptr, null, buffer_size, true, false, true, true, false, true, true, false);
+                int stdout_size = CliRunner.Run(command, stdout_ptr, env_ptr, buffer_size, true, false, true, true, false, true, true, false);
                 Console.WriteLine(stdout[..stdout_size]);
                 if (!CliRunner.IsUnix())
                 {
