@@ -49,18 +49,23 @@ public class CliRunner
               // Set environment variables
             if (environment_vars != null)
             {
-                string            json_env      = new(environment_vars);
-                Dictionary<string, string>? env = JsonSerializer.Deserialize(json_env, DictContext.Default.DictionaryStringString);
-                if (env != null)
+                string json_env = new(environment_vars);
+                if (!string.IsNullOrEmpty(json_env))
                 {
-                    foreach (var (key, value) in env)
+                    try
                     {
-                        pInfo.EnvironmentVariables.Add(key, value);
+                        Dictionary<string, string>? env = JsonSerializer.Deserialize(json_env, DictContext.Default.DictionaryStringString);
+                        if (env != null)
+                        {
+                            foreach (var (key, value) in env)
+                            {
+                                pInfo.EnvironmentVariables.Add(key, value);
+                            }
+                        }
                     }
+                    catch { }
                 }
             }
-
-              //pInfo.EnvironmentVariables.Add();
 
               // Start the command and wait for it to finish!
             process.Start();

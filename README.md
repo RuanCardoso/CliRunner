@@ -13,12 +13,15 @@ public unsafe static void Main()
         string stdout      = new('.', buffer_size);
         fixed (char* stdout_ptr = stdout)
         {
-            // arguments: command, output, environment_vars, buffer_size, wait_for_exit, redirect_stdin, redirect_stdout, redirect_stderr, use_shell, create_no_window use_powershell, force_utf8
-            int stdout_size = CliRunner.Run(command, stdout_ptr, null, buffer_size, true, false, true, true, false, true, true, false);
-            Console.WriteLine(stdout[..stdout_size]);
-            if (!CliRunner.IsUnix())
+            fixed (char* env_ptr = "{\"KEY1\":\"VALUE1\"}")
             {
-                Console.ReadLine();
+                // arguments: command, output, environment_vars, buffer_size, wait_for_exit, redirect_stdin, redirect_stdout, redirect_stderr, use_shell,     create_no_window use_powershell, force_utf8
+                int stdout_size = CliRunner.Run(command, stdout_ptr, null, buffer_size, true, false, true, true, false, true, true, false);
+                Console.WriteLine(stdout[..stdout_size]);
+                if (!CliRunner.IsUnix())
+                {
+                    Console.ReadLine();
+                }
             }
         }
     }
