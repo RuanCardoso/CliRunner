@@ -5,10 +5,30 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <PublishAot>true</PublishAot>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CliRunner\CliRunner.csproj" />
+    <!-- <ProjectReference Include="..\CliRunner\CliRunner.csproj" /> -->
   </ItemGroup>
+
+  <!-- 1️⃣ Publicar a DLL NativeAOT -->
+  <Target Name="BuildDllAot" BeforeTargets="BeforeBuild">
+    <Exec
+      Command="dotnet publish ..\CliRunner\CliRunner.csproj -c Release -r win-x64 -p:PublishAot=true" />
+  </Target>
+
+  <!-- 2️⃣ Copiar para o output do console -->
+  <Target Name="CopyNativeAotOutput" AfterTargets="BuildDllAot">
+    <PropertyGroup>
+      <CliRunnerNativePath>
+        ..\CliRunner\bin\Release\net9.0\win-x64\publish\CliRunner.dll</CliRunnerNativePath>
+    </PropertyGroup>
+
+    <Copy SourceFiles="$(CliRunnerNativePath)"
+      DestinationFolder="$(OutputPath)"
+      SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>
