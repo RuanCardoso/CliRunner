@@ -4,11 +4,12 @@ using System.Text;
 using System.Text.Unicode;
 
 // Default encoding is UTF-8, null-terminated strings
+// Supported OS: Windows, Linux, macOS
 
 public class CliRunner
 {
     private static readonly Encoding UTF8 = Encoding.UTF8;
-    private const string DllName = "CliRunner.dll";
+    private const string DllName = "CliRunner";
 
     [DllImport(DllName, EntryPoint = "ExecShell", CallingConvention = CallingConvention.Cdecl)]
     private static unsafe extern int Internal_ExecShell(byte* commandStrPtr, byte* dest_str_ptr, int dest_str_len); // UTF8 + null-terminated strings
